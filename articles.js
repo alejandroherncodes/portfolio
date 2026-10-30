@@ -1,14 +1,16 @@
-// Add a card by appending an entry here and creating its textFile in articles/.
-// Array order is the order shown on the page. pages: [] opens directly in text view.
+// Cards appear in array order. Use textFile for text and pages for print images.
 export const articles = [
   {
     id: "charli",
-    title: "Wuthering Heights - Charli xcx",
-    publication: "Tastemakers Magazine, Album Review",
+    title: "Charli Goes Gothic",
+    titleLines: ["Charli Goes Gothic"],
+    review: { title: "Wuthering Heights", artist: "Charli xcx" },
+    italicTitle: "Wuthering Heights",
+    publication: "Album Review, Tastemakers Magazine",
     recognition: "2026 Tasties / Best Album Review Winner",
     summary:
-      "Wuthering Heights stands out not because it's Charli’s strongest album, but because it demonstrates that she can work entirely inside someone else's world and still sound like no one other than herself.",
-    color: "#d31c4dff",
+      "Unmistakably Charli, this album presents untamable emotions boiling underneath heavy layers of processing.",
+    color: "#c82634ff",
     textFile: "articles/charli.html",
     pages: [
       {
@@ -21,11 +23,12 @@ export const articles = [
   {
     id: "feature",
     title: "Now Raving: Hollywood, Infected",
-    publication: "Tastemakers Magazine, Feature",
+    titleLines: ["Now Raving: ", "Hollywood, Infected"],
+    publication: "Feature, Tastemakers Magazine",
     recognition: "2026 Tasties / Best Feature Nominee",
     summary:
       "Nothing else quite captures the present as accurately as electronic and techno music, and directors are noticing.",
-    color: "#4DC141",
+    color: "#4EB161",
     textFile: "articles/feature.html",
     pages: [
       {
@@ -43,14 +46,81 @@ export const articles = [
   {
     id: "mozart",
     title: "Mozart’s effect on dissonance",
-    publication: "NU Sci Magazine, Feature",
+    titleLines: ["Mozart’s effect", "on dissonance"],
+    publication: "Feature, NU Sci Magazine",
     recognition: "Psychology, Neuroscience, and Culture",
     summary:
       "How pleasant music may help us tolerate uncertainty when the pressure is on.",
-    color: "#AF79D2",
+    color: "#0090d8ff",
     textFile: "articles/mozart.html",
     pages: [],
     url: "https://www.nuscimagazine.com/mozarts-effect-on-dissonance",
     linkLabel: "Read on nuscimagazine.com",
+  },
+      {
+    id: "adela",
+    title: "Adéla Isn’t Here to Apologize",
+    titleLines: ["Adéla Isn’t Here to Apologize"],
+    review: { title: "The Provocateur", artist: "ADÉLA" },
+    publication: "Album Review, MUSC2340",
+    recognition: "Music and Culture",
+    summary:
+      "With The Provocateur, ADÉLA stages an act of public indecency to question who's allowed to take up space.",
+    color: "#ff3694ff",
+    textFile: "articles/adela.html",
+    pdf: "assets/writing/adela.pdf",
+    bibliography: "assets/writing/adela-bibliography.pdf",
+    linkLabel: "View bibliography",
+    layout: "document",
+    pages: Array.from({ length: 3 }, (_, index) => ({
+      src: `assets/writing/adela/page-${index + 1}.png`,
+      alt: `Adéla Isn’t Here to Apologize, page ${index + 1} of 3`,
+    })),
+  },
+  {
+    id: "screenFinal",
+    title: "Repetition Over Resolution: Loop-Based Electronic Film Scores and Atemporal Cinema",
+    titleLines: ["Repetition Over", "Resolution:"],
+    subtitle: ["Electronic Film Scores", "and Atemporal Cinema"],
+    publication: "Academic Research, MUSC2351",
+    recognition: "Musicology, Film, and Culture",
+    summary:
+      "Analyzes loop-based electronic scoring to argue that film music can function as its own structural mechanism for producing atemporality.",
+    color: "#7340b6ff",
+    pdf: "assets/writing/screenFinal.pdf",
+    layout: "document",
+    pages: Array.from({ length: 11 }, (_, index) => ({
+      src: `assets/writing/screen-final/page-${index + 1}.png`,
+      alt: `Repetition Over Resolution, page ${index + 1} of 11`,
+    })),
+    linkLabel: "Open PDF",
+  },
+  {
+    id: "ddjdsFinal",
+    title: "Transpositions",
+    titleLines: ["Transpositions:"],
+    subtitle: "The Way Sound Bends",
+    publication: "Interactive Research, MUSC2340",
+    recognition: "Musicology, Gender Identity, and Culture",
+    summary:
+      "Examining how trans and gender-nonconforming artists have not only contributed to music history but repeatedly redefined its structures.",
+    color: "#fc752dff",
+    embed: "https://ddjds-transpositions.figma.site/",
+    bibliography: "assets/writing/transpositionsBiblography.pdf",
+    pages: [],
+    linkLabel: "View bibliography",
+  },
+  {
+    id: "amelia",
+    title: "Amelia!",
+    titleLines: ["''Amelia!''"],
+    italicTitle: "''Amelia!''",
+    publication: "Original Play",
+    recognition: "Fall 2026 Draft",
+    summary:
+      "Amelia Earheart is the first woman to fly around the world. Fred Noonan is from Illinois.",
+    color: "#767676e5",
+    textFile: "broken/broken.html",
+    issue: "https://www.tastemakersmag.com/issue/issue84",
   },
 ];
