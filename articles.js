@@ -110,7 +110,7 @@ export const articles = [
     pages: [],
     linkLabel: "View bibliography",
   },
-  {
+  /** {
     id: "amelia",
     title: "Amelia!",
     titleLines: ["''Amelia!''"],
@@ -122,5 +122,5 @@ export const articles = [
     color: "#767676e5",
     textFile: "broken/broken.html",
     issue: "https://www.tastemakersmag.com/issue/issue84",
-  },
+  },**/
 ];
