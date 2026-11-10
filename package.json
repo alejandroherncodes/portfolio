@@ -1,0 +1,17 @@
+{
+  "name": "alejandro-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild book-texture.js footer-icons.js --bundle --format=esm --minify --outdir=assets/vendor"
+  },
+  "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^7.3.1",
+    "d3-selection": "^3.0.0",
+    "lucide": "^1.65.0",
+    "textures": "^1.2.3"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

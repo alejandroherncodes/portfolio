@@ -1,6 +1,6 @@
 import { articles } from "./articles.js";
-
-document.querySelector("#year").textContent = new Date().getFullYear();
+import "./assets/vendor/book-texture.js";
+import "./assets/vendor/footer-icons.js";
 
 const reader = document.querySelector("#print-reader");
 const book = document.querySelector("#reader-book");
@@ -114,11 +114,11 @@ function renderCards() {
     card.innerHTML = `
       <div class="story-heading">
         <div class="story-meta"></div>
-        <span class="recognition"></span>
+        <strong class="recognition"></strong>
       </div>
       <h3><button class="story-open" aria-haspopup="dialog"></button></h3>
       <p></p>
-      <div class="story-bottom"><span class="story-number">Read →</span></div>
+      <div class="story-bottom"><strong class="story-number">Read →</strong></div>
     `;
     card.querySelector(".story-meta").textContent = article.publication;
     const recognition = card.querySelector(".recognition");
@@ -170,7 +170,7 @@ function renderCards() {
       });
       button.append(subtitle);
     }
-    card.querySelector("p").textContent = article.summary;
+    card.querySelector("p").innerHTML = article.summary;
     fragment.append(card);
   });
   cards.replaceChildren(fragment);

@@ -10,7 +10,7 @@ export const articles = [
     recognition: "2026 Tasties / Best Album Review Winner",
     summary:
       "Unmistakably Charli, this album presents untamable emotions boiling underneath heavy layers of processing.",
-    color: "#c82634ff",
+    color: "#e70023e0",
     textFile: "articles/charli.html",
     pages: [
       {
@@ -28,7 +28,7 @@ export const articles = [
     recognition: "2026 Tasties / Best Feature Nominee",
     summary:
       "Nothing else quite captures the present as accurately as electronic and techno music, and directors are noticing.",
-    color: "#4EB161",
+    color: "#02AB3D",
     textFile: "articles/feature.html",
     pages: [
       {
@@ -51,7 +51,7 @@ export const articles = [
     recognition: "Psychology, Neuroscience, and Culture",
     summary:
       "How pleasant music may help us tolerate uncertainty when the pressure is on.",
-    color: "#0090d8ff",
+    color: "#0A5DBE",
     textFile: "articles/mozart.html",
     pages: [],
     url: "https://www.nuscimagazine.com/mozarts-effect-on-dissonance",
@@ -65,7 +65,7 @@ export const articles = [
     publication: "Album Review, MUSC2340",
     recognition: "Music and Culture",
     summary:
-      "With The Provocateur, ADÉLA stages an act of public indecency to question who's allowed to take up space.",
+      "With <em>The Provocateur</em>, ADÉLA stages an act of public indecency to question who's allowed to take up space.",
     color: "#ff3694ff",
     textFile: "articles/adela.html",
     pdf: "assets/writing/adela.pdf",
@@ -104,7 +104,7 @@ export const articles = [
     recognition: "Musicology, Gender Identity, and Culture",
     summary:
       "Examining how trans and gender-nonconforming artists have not only contributed to music history but repeatedly redefined its structures.",
-    color: "#fc752dff",
+    color: "#a80c3ec2",
     embed: "https://ddjds-transpositions.figma.site/",
     bibliography: "assets/writing/transpositionsBiblography.pdf",
     pages: [],
