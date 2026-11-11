@@ -1,7 +1,5 @@
-import { articles } from "./articles.js";
-import { coverMarkup } from "./book-covers.js";
-import "./assets/vendor/book-texture.js";
-import "./assets/vendor/footer-icons.js";
+import { articles } from "./articles.js?v=20261111-2";
+import { coverMarkup } from "./book-covers.js?v=20261111-2";
 
 const reader = document.querySelector("#print-reader");
 const book = document.querySelector("#reader-book");
@@ -28,6 +26,14 @@ function setTextView(value) {
 }
 
 renderCards();
+
+// Decorative modules must not prevent the writing samples from appearing.
+for (const path of [
+  "./assets/vendor/book-texture.js?v=20261111-2",
+  "./assets/vendor/footer-icons.js?v=20261111-2",
+]) {
+  import(path).catch((error) => console.warn("Optional decoration could not load:", error));
+}
 
 document.querySelectorAll("[data-article]").forEach((button) => {
   button.addEventListener("click", () => {
