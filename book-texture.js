@@ -68,29 +68,3 @@ fill(
 );
 fill(cover, "#0000000a", 1).attr("x", 19);
 publish("cover-texture", cover);
-
-const svg = surface(2, 2);
-const pages = textures
-  .lines()
-  .id("book-pages")
-  .size(2)
-  .orientation("vertical")
-  .strokeWidth(1)
-  .stroke("#ccc6b8")
-  .background("#eee9dc")
-  .shapeRendering("crispEdges");
-
-svg.call(pages);
-fill(svg, pages.url());
-publish("page-texture", svg);
-
-// Share the shadow geometry while CSS interpolates the lift/put-down animation.
-const shadow = (x, y, blur, farX, farY, farBlur, opacity = 2) =>
-  `2px 3px 0 #0002, ${x}px ${y}px ${blur}px #000${opacity}, ${farX}px ${farY}px ${farBlur}px #0001`;
-for (const [state, values] of Object.entries({
-  rest: [9, 12, 15, 18, 24, 32],
-  hover: [12, 20, 24, 20, 32, 40],
-  selected: [14, 26, 30, 24, 38, 46, 3],
-}))
-  theme.setProperty(`--book-shadow-${state}`, shadow(...values));
-theme.setProperty("--book-edge-shadow", "1px 0 0 #0003");
