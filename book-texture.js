@@ -40,7 +40,7 @@ const grain = textures
   .id("book-grain")
   .size(3)
   .radius(0.2)
-  .fill("#ffffff0a");
+  .fill("#ffffff02");
 cover.call(grain);
 fill(cover, grain.url());
 const defs = cover.append("defs");
@@ -50,9 +50,9 @@ fill(
     defs,
     "cover-light",
     [
-      ["0%", "white", 1 / 15],
+      ["0%", "white", 0.005],
       ["45%", "white", 0],
-      ["100%", "black", 1 / 15],
+      ["100%", "black", 0.005],
     ],
     { x1: "0%", y1: "32%", x2: "100%", y2: "68%" },
   ),
@@ -60,13 +60,13 @@ fill(
 fill(
   cover,
   gradient(defs, "spine-light", [
-    ["10%", "white", 2 / 15],
-    ["20%", "#7e7e7e", 0.133],
-    ["35%", "#7c7c7c", 0.133],
+    ["10%", "white", 0.03],
+    ["20%", "#7e7e7e", 0.02],
+    ["35%", "#7c7c7c", 0.02],
   ]),
   20,
 );
-fill(cover, "#0002", 1).attr("x", 19);
+fill(cover, "#0000000a", 1).attr("x", 19);
 publish("cover-texture", cover);
 
 const svg = surface(2, 2);
