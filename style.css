@@ -94,11 +94,11 @@ header {
 }
 .footer-icon {
   border-radius: 8px;
-  background: #277b96;
+  background: #078eae;
   color: var(--paper);
 }
 .footer-icon:hover {
-  background: #20667e;
+  background: #067c98;
 }
 .section {
   margin: 0 28px;
@@ -125,7 +125,10 @@ header {
 .writing .section-label > p {
   margin: 0;
   color: var(--muted);
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 12px;
+  font-style: italic;
+  letter-spacing: 0.025em;
   line-height: 1.35;
 }
 .about {

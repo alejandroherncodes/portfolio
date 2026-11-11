@@ -15,14 +15,14 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Prepare published files
         run: |
           mkdir _site
           cp index.html style.css book-covers.css script.js articles.js book-covers.js .nojekyll _site/
           cp -R assets articles _site/
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
