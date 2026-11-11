@@ -1,11 +1,7 @@
-import { articles } from "./articles.js?v=20261111-2";
+import { articles } from "./articles.js?v=20261111-3";
 import { coverMarkup } from "./book-covers.js?v=20261111-2";
 
 const reader = document.querySelector("#print-reader");
-const book = document.querySelector("#reader-book");
-const stage = document.querySelector(".reader-stage");
-const textToggle = document.querySelector("#reader-text-toggle");
-const textView = document.querySelector("#reader-text");
 const embedView = document.querySelector("#reader-embed");
 const embedFrame = document.querySelector("#reader-embed-frame");
 new ResizeObserver(([entry]) => {
@@ -13,23 +9,11 @@ new ResizeObserver(([entry]) => {
 }).observe(embedFrame);
 let selectedBook;
 
-function setTextView(value) {
-  embedFrame.hidden = true;
-  stage.classList.remove("is-embed");
-  textView.hidden = !value;
-  book.hidden = value;
-  stage.classList.toggle("is-text", value);
-  textToggle.setAttribute("aria-pressed", String(value));
-  textToggle.textContent = value ? "Print view" : "Text only";
-  stage.setAttribute("aria-label", value ? "Article text" : "Print pages");
-  stage.scrollTo(0, 0);
-}
-
 renderCards();
 
 // Decorative modules must not prevent the writing samples from appearing.
 for (const path of [
-  "./assets/vendor/book-texture.js?v=20261111-2",
+  "./assets/vendor/book-texture.js?v=20261111-3",
   "./assets/vendor/footer-icons.js?v=20261111-2",
 ]) {
   import(path).catch((error) => console.warn("Optional decoration could not load:", error));
@@ -37,80 +21,31 @@ for (const path of [
 
 document.querySelectorAll("[data-article]").forEach((button) => {
   button.addEventListener("click", () => {
-    selectedBook = button;
-    button.closest(".story").classList.add("is-selected");
-    const article = articles.find((item) => item.id === button.dataset.article);
-    document.querySelector("#reader-summary").innerHTML = article.summary;
-    document.querySelector(".reader-summary").open = false;
-    const credit = document.querySelector("#reader-credit");
-    credit.textContent = article.credit || "";
-    credit.hidden = !article.credit;
-    if (!article.textFile) {
-      textRequest?.abort();
-      textView.replaceChildren();
-    } else {
-      loadArticleText(article);
+    const item = articles.find((article) => article.id === button.dataset.article);
+    if (item.document) {
+      openDocumentReader(item, button);
+      return;
     }
-    reader.setAttribute("aria-label", article.title + " — article reader");
-    textToggle.hidden = !article.textFile || article.pages.length === 0;
-    book.classList.toggle("is-document", article.layout === "document");
-    book.classList.toggle(
-      "is-spread",
-      article.pages.length > 1 && article.layout !== "document",
-    );
-    book.replaceChildren(
-      ...article.pages.map((source) => {
-        const image = document.createElement("img");
-        image.alt = source.alt;
-        if (article.layout === "document") image.loading = "lazy";
-        image.addEventListener("load", () => {
-          image.style.setProperty(
-            "--page-ratio",
-            image.naturalWidth / image.naturalHeight,
-          );
-        });
-        image.addEventListener("error", () => {
-          const message = document.createElement("p");
-          message.textContent =
-            "This page could not load. Close the reader and try again.";
-          image.replaceWith(message);
-        });
-        image.src = source.src;
-        return image;
-      }),
-    );
-    const issue = document.querySelector("#reader-issue");
-    const articleLink =
-      article.bibliography ||
-      article.embed ||
-      article.pdf ||
-      article.issue ||
-      article.url;
-    issue.hidden = !articleLink;
-    issue.textContent = article.issue
-      ? "Read the full issue"
-      : article.linkLabel || "Read original article";
-    if (articleLink) issue.href = articleLink;
-    reader.showModal();
-    setTextView(!article.embed && article.pages.length === 0);
-    if (article.embed) {
-      book.hidden = true;
-      embedView.title = article.title;
-      embedView.src = article.embed;
-      embedFrame.hidden = false;
-      stage.classList.add("is-embed");
-      stage.setAttribute(
-        "aria-label",
-        article.title + " — interactive project",
-      );
+    if (item.textFile) {
+      openTextReader(item, button);
+      return;
     }
+    if (item.embed) openEmbedReader(item, button);
   });
 });
 
-textToggle.addEventListener("click", () => setTextView(textView.hidden));
-document
-  .querySelector("#reader-close")
-  .addEventListener("click", () => reader.close());
+function openEmbedReader(article, button) {
+  selectedBook = button;
+  button.closest(".story").classList.add("is-selected");
+  reader.setAttribute("aria-label", article.title + " — interactive project");
+  const issue = document.querySelector("#reader-issue");
+  issue.href = article.bibliography;
+  issue.textContent = article.linkLabel;
+  embedView.title = article.title;
+  embedView.src = article.embed;
+  reader.showModal();
+}
+document.querySelector("#reader-close").addEventListener("click", () => reader.close());
 
 function renderCards() {
   const cards = document.querySelector("#writing-cards");
@@ -121,9 +56,16 @@ function renderCards() {
     card.dataset.cover = article.id;
     card.innerHTML = `<div class="cover-art" aria-hidden="true">${coverMarkup(article.id)}</div>
       <h3 class="cover-action"><button class="story-open" aria-haspopup="dialog"><span class="visually-hidden"></span></button></h3>`;
-    const button = card.querySelector("button");
+    const button = card.querySelector(".story-open");
     button.dataset.article = article.id;
     button.querySelector("span").textContent = article.title;
+    const blurb = document.createElement("p");
+    blurb.className = "book-blurb";
+    blurb.id = `blurb-${article.id}`;
+    blurb.setAttribute("role", "tooltip");
+    blurb.innerHTML = article.summary;
+    button.setAttribute("aria-describedby", blurb.id);
+    card.append(blurb);
     if (article.awardSticker) {
       const slot = card.querySelector("[data-award-slot]");
       if (slot) {
@@ -139,41 +81,6 @@ function renderCards() {
   cards.replaceChildren(fragment);
 }
 
-let textRequest;
-
-async function loadArticleText(article) {
-  textRequest?.abort();
-  const request = new AbortController();
-  textRequest = request;
-  const loading = document.createElement("p");
-  loading.setAttribute("role", "status");
-  loading.textContent = "Loading article…";
-  textView.replaceChildren(loading);
-  try {
-    const response = await fetch(article.textFile, {
-      signal: request.signal,
-      cache: "no-store",
-    });
-    if (!response.ok)
-      throw new Error(`Article request failed: ${response.status}`);
-    const html = await response.text();
-    if (request.signal.aborted) return;
-    const content = document.createElement("template");
-    content.innerHTML = html;
-    textView.replaceChildren(content.content.cloneNode(true));
-  } catch (error) {
-    if (request.signal.aborted) return;
-    const message = document.createElement("p");
-    message.setAttribute("role", "alert");
-    message.textContent = "The article text could not load.";
-    const retry = document.createElement("button");
-    retry.type = "button";
-    retry.textContent = "Try again";
-    retry.addEventListener("click", () => loadArticleText(article));
-    textView.replaceChildren(message, retry);
-  }
-}
-
 reader.addEventListener("close", () => {
   const cover = selectedBook?.closest(".story");
   selectedBook?.blur();
@@ -186,6 +93,123 @@ reader.addEventListener("close", () => {
       }
     });
   });
-  textRequest?.abort();
   embedView.removeAttribute("src");
+});
+
+const textReader = document.querySelector("#text-reader");
+const textContent = document.querySelector("#text-reader-content");
+const textScroll = document.querySelector("#text-reader-scroll");
+const printEdition = document.querySelector("#print-edition");
+const printPages = document.querySelector("#print-pages");
+const printButton = document.querySelector("#text-reader-print");
+let activeArticle;
+let activeCover;
+let articleRequest;
+
+function openTextReader(article, button) {
+  activeArticle = article;
+  activeCover = button;
+  button.closest(".story").classList.add("is-selected");
+  textReader.setAttribute("aria-label", article.title + " — article reader");
+  const issueInToolbar = article.id === "charli" || article.id === "feature";
+  const issueLink = document.querySelector("#text-reader-issue");
+  issueLink.hidden = !issueInToolbar;
+  if (issueInToolbar) issueLink.href = article.issue;
+  else issueLink.removeAttribute("href");
+  printButton.hidden = article.id === "charli" || !article.pages.length;
+  const source = document.querySelector("#text-reader-source");
+  const url = article.bibliography || article.issue || article.url;
+  source.hidden = issueInToolbar || !url;
+  if (url) source.href = url;
+  else source.removeAttribute("href");
+  source.textContent = article.linkLabel || "Read original article ➜";
+  loadTextReader(article);
+  textReader.showModal();
+  textScroll.scrollTo(0, 0);
+}
+
+async function loadTextReader(article) {
+  articleRequest?.abort();
+  const request = new AbortController();
+  articleRequest = request;
+  const loading = document.createElement("p");
+  loading.setAttribute("role", "status");
+  loading.textContent = "Loading article…";
+  textContent.replaceChildren(loading);
+  try {
+    const response = await fetch(article.textFile, { signal: request.signal, cache: "no-store" });
+    if (!response.ok) throw new Error(`Article request failed: ${response.status}`);
+    const html = await response.text();
+    if (request.signal.aborted) return;
+    const template = document.createElement("template");
+    template.innerHTML = html;
+    textContent.replaceChildren(template.content.cloneNode(true));
+  } catch (error) {
+    if (request.signal.aborted) return;
+    const message = document.createElement("p");
+    message.setAttribute("role", "alert");
+    message.textContent = "The article text could not load.";
+    const retry = document.createElement("button");
+    retry.type = "button";
+    retry.textContent = "Try again";
+    retry.addEventListener("click", () => loadTextReader(article));
+    textContent.replaceChildren(message, retry);
+  }
+}
+
+function openPrintEdition() {
+  if (!activeArticle?.pages.length || printEdition.open) return;
+  printPages.classList.toggle("is-spread", activeArticle.id === "feature");
+  document.querySelector("#print-edition-title").textContent = activeArticle.title;
+  const credit = document.querySelector("#print-edition-credit");
+  credit.textContent = activeArticle.credit || "";
+  credit.hidden = !activeArticle.credit;
+  printPages.replaceChildren(...activeArticle.pages.map((page, index) => {
+    const figure = document.createElement("figure");
+    const image = document.createElement("img");
+    image.src = page.src;
+    image.alt = page.alt;
+    image.loading = index ? "lazy" : "eager";
+    image.addEventListener("error", () => {
+      const message = document.createElement("p");
+      message.textContent = "This print page could not load. Return to the article to keep reading.";
+      image.replaceWith(message);
+    });
+    const caption = document.createElement("figcaption");
+    caption.textContent = `${index + 1} / ${activeArticle.pages.length}`;
+    figure.append(image, caption);
+    return figure;
+  }));
+  printEdition.showModal();
+  printEdition.scrollTo(0, 0);
+}
+printButton.addEventListener("click", openPrintEdition);
+document.querySelector("#print-edition-close").addEventListener("click", () => printEdition.close());
+printEdition.addEventListener("close", () => printPages.replaceChildren());
+document.querySelector("#text-reader-close").addEventListener("click", () => textReader.close());
+textReader.addEventListener("close", () => {
+  articleRequest?.abort();
+  if (printEdition.open) printEdition.close();
+  activeCover?.closest(".story").classList.remove("is-selected");
+  activeCover = undefined;
+  activeArticle = undefined;
+});
+
+const documentReader = document.querySelector("#document-reader");
+const documentFrame = document.querySelector("#document-reader-frame");
+let documentCover;
+
+function openDocumentReader(article, button) {
+  documentCover = button;
+  button.closest(".story").classList.add("is-selected");
+  documentReader.setAttribute("aria-label", article.title + " — document viewer");
+  documentFrame.title = article.title + " — document viewer";
+  documentFrame.src = article.document + "#toolbar=0&navpanes=0&view=FitH";
+  documentReader.showModal();
+}
+document.querySelector("#document-reader-close").addEventListener("click", () => documentReader.close());
+documentReader.addEventListener("close", () => {
+  documentFrame.removeAttribute("src");
+  documentCover?.closest(".story").classList.remove("is-selected");
+  documentCover = undefined;
 });

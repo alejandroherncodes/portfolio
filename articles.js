@@ -1,128 +1,64 @@
-// Cards appear in array order. Use textFile for text and pages for print images.
-// Use awardSticker for the supplied award artwork.
+// Cards appear in array order; pages are used only for available print editions.
 export const articles = [
   {
-    id: "charli",
-    title: "Charli Goes Gothic",
-    titleLines: ["Charli Goes Gothic"],
-    review: { title: "Wuthering Heights", artist: "Charli xcx" },
-    italicTitle: "Wuthering Heights",
-    publication: "Album Review, Tastemakers Magazine",
-    recognition: "2026 Tasties / Best Album Review Winner",
-    awardSticker: "assets/img/winner-sticker.png",
-    summary:
-      "Unmistakably Charli, this album presents untamable emotions boiling underneath heavy layers of processing.",
-    color: "#e70023e0",
-    textFile: "articles/charli.html",
-    pages: [
+    "id": "charli",
+    "title": "Charli Goes Gothic",
+    "summary": "Unmistakably Charli, this album presents untamable emotions boiling underneath heavy layers of processing.",
+    "awardSticker": "assets/img/winner-sticker.png",
+    "textFile": "articles/charli.html",
+    "pages": [],
+    "issue": "https://www.tastemakersmag.com/issue/issue84"
+  },
+  {
+    "id": "feature",
+    "title": "Now Raving: Hollywood, Infected",
+    "summary": "Nothing else quite captures the present as accurately as electronic and techno music, and directors are noticing.",
+    "textFile": "articles/feature.html",
+    "pages": [
       {
-        src: "assets/tastemakers/wuthering-heights_review copy.png",
-        alt: "Charli xcx review, original print page",
+        "src": "assets/tastemakers/now-raving1.webp",
+        "alt": "Electronic music in film scoring feature, page 1"
       },
+      {
+        "src": "assets/tastemakers/nowraving2.webp",
+        "alt": "Electronic music in film scoring feature, page 2"
+      }
     ],
-    issue: "https://www.tastemakersmag.com/issue/issue84",
+    "issue": "https://www.tastemakersmag.com/issue/issue84",
+    "credit": "Design by Nina Roshe"
   },
   {
-    id: "feature",
-    title: "Now Raving: Hollywood, Infected",
-    titleLines: ["Now Raving: ", "Hollywood, Infected"],
-    publication: "Feature, Tastemakers Magazine",
-    recognition: "2026 Tasties / Best Feature Nominee",
-    summary:
-      "Nothing else quite captures the present as accurately as electronic and techno music, and directors are noticing.",
-    color: "#02AB3D",
-    textFile: "articles/feature.html",
-    pages: [
-      {
-        src: "assets/tastemakers/now-raving1.webp",
-        alt: "Electronic music in film scoring feature, page 1",
-      },
-      {
-        src: "assets/tastemakers/nowraving2.webp",
-        alt: "Electronic music in film scoring feature, page 2",
-      },
-    ],
-    issue: "https://www.tastemakersmag.com/issue/issue84",
-    credit: "Design by Nina Roshe",
+    "id": "mozart",
+    "title": "Mozart’s effect on dissonance",
+    "summary": "How pleasant music may help us tolerate uncertainty when the pressure is on.",
+    "textFile": "articles/mozart.html",
+    "pages": [],
+    "url": "https://www.nuscimagazine.com/mozarts-effect-on-dissonance",
+    "linkLabel": "Read on nuscimagazine.com"
   },
   {
-    id: "mozart",
-    title: "Mozart’s effect on dissonance",
-    titleLines: ["Mozart’s effect", "on dissonance"],
-    publication: "Feature, NU Sci Magazine",
-    recognition: "Psychology, Neuroscience, and Culture",
-    summary:
-      "How pleasant music may help us tolerate uncertainty when the pressure is on.",
-    color: "#0A5DBE",
-    textFile: "articles/mozart.html",
-    pages: [],
-    url: "https://www.nuscimagazine.com/mozarts-effect-on-dissonance",
-    linkLabel: "Read on nuscimagazine.com",
+    "id": "adela",
+    "title": "Adéla Isn’t Here to Apologize",
+    "summary": "With <em>The Provocateur</em>, ADÉLA stages an act of public indecency to question who's allowed to take up space.",
+    "textFile": "articles/adela.html",
+    "pages": [],
+    "linkLabel": "View bibliography",
+    "bibliography": "assets/writing/adela-bibliography.pdf"
   },
   {
-    id: "adela",
-    title: "Adéla Isn’t Here to Apologize",
-    titleLines: ["Adéla Isn’t Here to Apologize"],
-    review: { title: "The Provocateur", artist: "ADÉLA" },
-    publication: "Album Review, MUSC2340",
-    recognition: "Music and Culture",
-    summary:
-      "With <em>The Provocateur</em>, ADÉLA stages an act of public indecency to question who's allowed to take up space.",
-    color: "#ff3694ff",
-    textFile: "articles/adela.html",
-    pdf: "assets/writing/adela.pdf",
-    bibliography: "assets/writing/adela-bibliography.pdf",
-    linkLabel: "View bibliography",
-    layout: "document",
-    pages: Array.from({ length: 3 }, (_, index) => ({
-      src: `assets/writing/adela/page-${index + 1}.png`,
-      alt: `Adéla Isn’t Here to Apologize, page ${index + 1} of 3`,
-    })),
+    "id": "screenFinal",
+    "title": "Repetition Over Resolution: Loop-Based Electronic Film Scores and Atemporal Cinema",
+    "summary": "Analyzes loop-based electronic scoring to argue that film music can function as its own structural mechanism for producing atemporality.",
+    "pages": [],
+    "document": "assets/writing/screen-final/screenFinal.pdf"
   },
   {
-    id: "screenFinal",
-    title: "Repetition Over Resolution: Loop-Based Electronic Film Scores and Atemporal Cinema",
-    titleLines: ["Repetition Over", "Resolution:"],
-    subtitle: ["Electronic Film Scores", "and Atemporal Cinema"],
-    publication: "Academic Research, MUSC2351",
-    recognition: "Musicology, Film, and Culture",
-    summary:
-      "Analyzes loop-based electronic scoring to argue that film music can function as its own structural mechanism for producing atemporality.",
-    color: "#7340b6ff",
-    pdf: "https://docs.google.com/document/d/1uzFh9MrqoGwTG9dWgfvv7Pr8TlcNjxNNlk5lGn9LLrs/edit?usp=sharing",
-    layout: "document",
-    pages: Array.from({ length: 11 }, (_, index) => ({
-      src: `assets/writing/screen-final/page-${index + 1}.png`,
-      alt: `Repetition Over Resolution, page ${index + 1} of 11`,
-    })),
-    linkLabel: "Open PDF",
-  },
-  {
-    id: "ddjdsFinal",
-    title: "Transpositions",
-    titleLines: ["Transpositions:"],
-    subtitle: "The Way Sound Bends",
-    publication: "Interactive Research, MUSC2340",
-    recognition: "Musicology, Gender Identity, and Culture",
-    summary:
-      "Examining how trans and gender-nonconforming artists have not only contributed to music history but repeatedly redefined its structures.",
-    color: "#a80c3ec2",
-    embed: "https://ddjds-transpositions.figma.site/",
-    bibliography: "assets/writing/transpositionsBiblography.pdf",
-    pages: [],
-    linkLabel: "View bibliography",
-  },
-  /** {
-    id: "amelia",
-    title: "Amelia!",
-    titleLines: ["''Amelia!''"],
-    italicTitle: "''Amelia!''",
-    publication: "Original Play",
-    recognition: "Fall 2026 Draft",
-    summary:
-      "Amelia Earheart is the first woman to fly around the world. Fred Noonan is from Illinois.",
-    color: "#767676e5",
-    textFile: "broken/broken.html",
-    issue: "https://www.tastemakersmag.com/issue/issue84",
-  },**/
+    "id": "ddjdsFinal",
+    "title": "Transpositions",
+    "summary": "Examining how trans and gender-nonconforming artists have not only contributed to music history but repeatedly redefined its structures.",
+    "pages": [],
+    "linkLabel": "View bibliography",
+    "bibliography": "assets/writing/transpositionsBiblography.pdf",
+    "embed": "https://ddjds-transpositions.figma.site/"
+  }
 ];
