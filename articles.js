@@ -1,4 +1,5 @@
 // Cards appear in array order. Use textFile for text and pages for print images.
+// Use awardSticker for the supplied award artwork.
 export const articles = [
   {
     id: "charli",
@@ -8,6 +9,7 @@ export const articles = [
     italicTitle: "Wuthering Heights",
     publication: "Album Review, Tastemakers Magazine",
     recognition: "2026 Tasties / Best Album Review Winner",
+    awardSticker: "assets/img/winner-sticker.png",
     summary:
       "Unmistakably Charli, this album presents untamable emotions boiling underneath heavy layers of processing.",
     color: "#e70023e0",
@@ -57,7 +59,7 @@ export const articles = [
     url: "https://www.nuscimagazine.com/mozarts-effect-on-dissonance",
     linkLabel: "Read on nuscimagazine.com",
   },
-      {
+  {
     id: "adela",
     title: "Adéla Isn’t Here to Apologize",
     titleLines: ["Adéla Isn’t Here to Apologize"],
@@ -87,7 +89,7 @@ export const articles = [
     summary:
       "Analyzes loop-based electronic scoring to argue that film music can function as its own structural mechanism for producing atemporality.",
     color: "#7340b6ff",
-    pdf: "assets/writing/screenFinal.pdf",
+    pdf: "https://docs.google.com/document/d/1uzFh9MrqoGwTG9dWgfvv7Pr8TlcNjxNNlk5lGn9LLrs/edit?usp=sharing",
     layout: "document",
     pages: Array.from({ length: 11 }, (_, index) => ({
       src: `assets/writing/screen-final/page-${index + 1}.png`,
