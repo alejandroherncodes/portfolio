@@ -9,6 +9,7 @@
     />
     <title>Alejandro Hernandez</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="book-covers.css" />
     <script type="module" src="script.js"></script>
   </head>
   <body>
@@ -55,9 +56,12 @@
         <a class="footer-icon" id="footer-email" href="mailto:alejandrojorgehern@gmail.com" aria-label="Compose email to Alejandro Hernandez" title="Email"></a>
         </div>
       </nav>
-      <a class="footer-top" href="#top" aria-label="Back to top" title="Back to top"><span class="footer-plane" aria-hidden="true"></span></a>
     </footer>
     <dialog id="print-reader" aria-label="Article reader">
+      <details class="reader-summary">
+        <summary>About this piece</summary>
+        <p id="reader-summary"></p>
+      </details>
       <div class="reader-actions">
         <button
           type="button"

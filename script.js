@@ -1,4 +1,5 @@
 import { articles } from "./articles.js";
+import { coverMarkup } from "./book-covers.js";
 import "./assets/vendor/book-texture.js";
 import "./assets/vendor/footer-icons.js";
 
@@ -33,6 +34,8 @@ document.querySelectorAll("[data-article]").forEach((button) => {
     selectedBook = button;
     button.closest(".story").classList.add("is-selected");
     const article = articles.find((item) => item.id === button.dataset.article);
+    document.querySelector("#reader-summary").innerHTML = article.summary;
+    document.querySelector(".reader-summary").open = false;
     const credit = document.querySelector("#reader-credit");
     credit.textContent = article.credit || "";
     credit.hidden = !article.credit;
@@ -109,68 +112,22 @@ function renderCards() {
   articles.forEach((article) => {
     const card = document.createElement("article");
     card.className = "story";
-    card.style.backgroundColor = article.color;
-    if (article.textColor) card.style.color = article.textColor;
-    card.innerHTML = `
-      <div class="story-heading">
-        <div class="story-meta"></div>
-        <strong class="recognition"></strong>
-      </div>
-      <h3><button class="story-open" aria-haspopup="dialog"></button></h3>
-      <p></p>
-      <div class="story-bottom"><strong class="story-number">Read →</strong></div>
-    `;
-    card.querySelector(".story-meta").textContent = article.publication;
-    const recognition = card.querySelector(".recognition");
-    recognition.textContent = article.recognition || "";
-    recognition.hidden = !article.recognition;
+    card.dataset.cover = article.id;
+    card.innerHTML = `<div class="cover-art" aria-hidden="true">${coverMarkup(article.id)}</div>
+      <h3 class="cover-action"><button class="story-open" aria-haspopup="dialog"><span class="visually-hidden"></span></button></h3>`;
     const button = card.querySelector("button");
     button.dataset.article = article.id;
-    button.setAttribute("aria-label", article.title);
-    (article.titleLines || [article.title]).forEach((text) => {
-      const line = document.createElement("span");
-      if (article.titleLines) line.className = "title-line";
-      if (article.italicTitle && text.startsWith(article.italicTitle)) {
-        const emphasis = document.createElement("em");
-        emphasis.textContent = article.italicTitle;
-        line.append(
-          emphasis,
-          document.createTextNode(text.slice(article.italicTitle.length)),
-        );
-      } else {
-        line.textContent = text;
+    button.querySelector("span").textContent = article.title;
+    if (article.awardSticker) {
+      const slot = card.querySelector("[data-award-slot]");
+      if (slot) {
+        const sticker = document.createElement("img");
+        sticker.src = article.awardSticker;
+        sticker.alt = "";
+        slot.replaceChildren(sticker);
+        slot.classList.add("has-sticker");
       }
-      button.append(line);
-    });
-    if (article.review) {
-      const callout = document.createElement("span");
-      callout.className = "story-review";
-      const label = document.createElement("strong");
-      label.className = "story-review-label";
-      label.textContent = "REVIEW:";
-      const details = document.createElement("span");
-      details.className = "story-review-details";
-      const album = document.createElement("em");
-      album.textContent = article.review.title;
-      const artist = document.createElement("span");
-      artist.className = "story-review-artist";
-      artist.textContent = `by ${article.review.artist}`;
-      details.append(album, artist);
-      callout.append(label, details);
-      card.insertBefore(callout, card.querySelector("p"));
-    } else if (article.subtitle) {
-      const subtitle = document.createElement("span");
-      subtitle.className = "story-subtitle";
-      const lines = Array.isArray(article.subtitle)
-        ? article.subtitle
-        : [article.subtitle];
-      lines.forEach((line, index) => {
-        if (index > 0) subtitle.append(document.createElement("br"));
-        subtitle.append(document.createTextNode(line));
-      });
-      button.append(subtitle);
     }
-    card.querySelector("p").innerHTML = article.summary;
     fragment.append(card);
   });
   cards.replaceChildren(fragment);

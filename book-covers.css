@@ -1,0 +1,226 @@
+@font-face {
+  font-family: "Cover Gothic";
+  src: url("assets/fonts/UnifrakturCook-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cover Condensed";
+  src: url("assets/fonts/BebasNeue-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Keep the site's original scale and spacing; artwork stays inside each book. */
+.writing .section-body {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding: 12px 10px 32px 0;
+  gap: 32px;
+}
+
+.story {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  min-height: 390px;
+  aspect-ratio: 0.72;
+  container-type: inline-size;
+  border-radius: 1px;
+  box-shadow: 1px 2px 2px #0003, 5px 6px 9px #0002;
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+.story::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 3px -5px 0 auto;
+  width: 6px;
+  background: repeating-linear-gradient(90deg, #e5dfcc 0 1px, #aea998 1px 1.5px);
+  border: 1px solid #b8b5a4;
+  border-radius: 0 2px 2px 0;
+}
+.cover-art { position: absolute; inset: 0; overflow: hidden; color: rgb(10 10 8 / 95%); }
+.cover-art::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+  z-index: 5;
+  background-image: var(--book-cover-texture), linear-gradient(90deg, #0002, transparent 2%, #ffffff15 2.5%, transparent 3.1%);
+  box-shadow: inset 0 0 0 1px #0002;
+}
+.cover-art > div, .cover-art > span { position: absolute; }
+.cover-action { position: absolute; inset: 0; margin: 0; z-index: 6; }
+.story-open { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; border-radius: 0; }
+.story-open:focus-visible { outline: 3px solid #06a5da; outline-offset: 4px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.story:is(:hover, :focus-within) { transform: translateY(-3px) rotate(-0.5deg); box-shadow: 1px 3px 3px #0003, 6px 10px 13px #0002; }
+.story.is-selected { transform: translateY(-7px) rotate(-1deg); }
+.cover-read { bottom: 4.8%; right: 4%; font-size: 3cqw; }
+.award-slot img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.award-slot.has-sticker { border: 0; padding: 0; background: transparent; }
+
+/* Shared print details; these rules affect cover artwork only. */
+.cover-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cover-kicker, .cover-imprint { left: 6%; right: 6%; font-family: "Cover Condensed", "Arial Narrow", sans-serif; font-size: 3.9cqw; line-height: 1.15; }
+.cover-kicker { top: 3%; padding-bottom: 1.5cqw; border-bottom: 1px solid currentColor; }
+.cover-imprint { bottom: 3%; padding-top: 1.4cqw; border-top: 1px solid currentColor; }
+.cover-kicker:has(span), .cover-imprint:has(span) { display: flex; justify-content: space-between; gap: 2cqw; }
+.cover-imprint:has(span) { font-size: 2.8cqw; }
+.cover-imprint span:last-child { text-align: right; }
+
+/* Charli: a red film still and large, tightly set white lettering. */
+[data-cover="charli"] .cover-art { background: #3f3f3f; color: rgb(250 250 246 / 97%); }
+.charli-photo { opacity: .75; object-position: 52% center; filter: contrast(1.15) saturate(.8); }
+.charli-title { top: 3.5%; left: 6%; right: 6%; text-align: right; font-family: "Times New Roman", Times, serif; font-size: 19.7cqw; line-height: .85; letter-spacing: -.95cqw; }
+.charli-description, .adela-description { left: 6%; bottom: 9%; font-size: 5.1cqw; line-height: 1.05; }
+.charli-description em, .adela-description em { font-weight: 600; }
+[data-cover="charli"] .cover-imprint, [data-cover="adela"] .cover-imprint { right: 40%; font-size: 3.9cqw; }
+.award-slot--winner { left: auto; right: 6%; bottom: 6%; width: 23%; aspect-ratio: 1; height: auto; border: 1px solid #c6ad74; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #d7bc87; text-align: center; transform: rotate(-10deg); }
+.award-slot--winner span { font-size: 3cqw; }
+.award-slot--winner b { font-family: Arial, sans-serif; font-weight: 400; font-size: 3.3cqw; line-height: 1.05; margin: 1cqw 0; }
+.award-slot--winner.has-sticker { right: 5%; bottom: 7%; width: 32%; aspect-ratio: 484 / 312; border-radius: 0; }
+
+/* Now Raving: green photo treatment with solid blocks behind the title. */
+[data-cover="feature"] .cover-art { background: #94c82c; color: #a1d23d; }
+.rave-photo { filter: grayscale(1) contrast(2.7); mix-blend-mode: multiply; opacity: .94; object-position: 40% center; }
+[data-cover="feature"] .cover-kicker { --label-background: rgb(70 115 35 / 45%); --label-ink: #dbedaf; }
+.raving-title { top: 9%; left: 6%; right: 3%; bottom: 3%; display: flex; flex-direction: column; justify-content: space-between; font-family: "Cover Condensed", Impact, sans-serif; font-size: 24.5cqw; line-height: .88; letter-spacing: -.45cqw; }
+.raving-title > span { align-self: start; background: #10301f; box-shadow: 1.1cqw 0 #10301f, -1.1cqw 0 #10301f; }
+.raving-title > span:last-child { font-size: 22.5cqw; }
+.award-slot--nominee {
+  right: 8%; top: 15%; width: 26%; padding: 1.2cqw .8cqw;
+  border: 1px solid #394c22; outline: 1px solid #394c2270; outline-offset: 2px;
+  background: #b2c875bd; color: #142b16;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; transform: rotate(12deg);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2.3cqw; line-height: 1.15;
+}
+.award-slot--nominee span:nth-child(2) { font-size: 1.9cqw; }
+.award-slot--nominee b, .award-slot--nominee small { font-family: "Cover Condensed", Impact, sans-serif; }
+.award-slot--nominee b { font-size: 4.4cqw; font-weight: 400; margin: .8cqw 0 .3cqw; }
+.award-slot--nominee small { font-size: 2.4cqw; }
+
+/* Mozart: the supplied optical patterns blend into uncoated cream stock. */
+[data-cover="mozart"] .cover-art { background: #f0eedf; color: #0d0d0a; }
+.mozart-pattern { position: absolute; width: 115%; height: auto; mix-blend-mode: multiply; }
+.mozart-pattern--one { top: -7%; left: -8%; transform: rotate(-13deg); }
+.mozart-pattern--two { bottom: -31%; left: -25%; width: 92%; transform: rotate(18deg); opacity: .2; }
+[data-cover="mozart"] .cover-kicker, .research-kicker { --label-background: #f0eedf; --label-ink: #0d0d0a; }
+[data-cover="feature"] .cover-kicker,
+[data-cover="mozart"] .cover-kicker,
+.research-kicker {
+  top: 3%;
+  font-family: "Cover Condensed", "Arial Narrow", sans-serif;
+  font-size: 4.2cqw;
+  line-height: 1.15;
+  padding: 1cqw 0;
+  background: transparent;
+  color: var(--label-ink);
+  border-bottom: 1px solid currentColor;
+  -webkit-text-stroke: 2px var(--label-background);
+  paint-order: stroke fill;
+}
+.mozart-title { left: 6%; bottom: 4%; font-family: "Times New Roman", Times, serif; font-size: 14.2cqw; line-height: .86; letter-spacing: -.7cqw; }
+.mozart-category {
+  right: 6%; top: 11%;
+  font-family: "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+  font-size: 3.6cqw;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: .06em;
+  text-align: right;
+  transform: rotate(3deg);
+}
+.mozart-category span { display: block; }
+.mozart-title, .mozart-category {
+  -webkit-text-stroke: 1.6px #f0eedf;
+  paint-order: stroke fill;
+}
+
+/* Adéla: magenta photographic cover, with editorial black-and-white type. */
+[data-cover="adela"] .cover-art { background: #dd0087; color: #f8f2e5; }
+.adela-photo { filter: grayscale(1) contrast(2.6); mix-blend-mode: multiply; object-position: 65% center; opacity: .9; }
+[data-cover="adela"] .cover-kicker { color: #fff7e8; font-size: 3.2cqw; text-shadow: 0 1px 2px #000b; }
+.adela-title { top: 12%; left: 6%; right: 2%; display: flex; flex-direction: column; align-items: start; font-family: "Cover Condensed", Impact, sans-serif; font-size: 23.3cqw; line-height: .88; letter-spacing: -.5cqw; color: rgb(255 251 232 / 96%); }
+.adela-title .adela-name { color: inherit; }
+.adela-name span { color: #f8f2e5; }
+.adela-title > span:last-child { font-size: 23cqw; }
+
+/* Research covers share Mozart's paper, ink, header, and subject-label conventions. */
+[data-cover="screenFinal"] .cover-art,
+[data-cover="ddjdsFinal"] .cover-art { background: #f0eedf; color: #192a48; }
+.research-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 76%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  mask-image: linear-gradient(to bottom, #000 0% 48%, transparent 100%);
+}
+.repetition-art { object-position: center top; }
+.transpositions-photo { object-position: center 48%; }
+.research-category { color: #192a48; }
+
+/* The repeated impressions progress continuously from invisible to 60%, then solid ink. */
+.repetition-title-block { top: 43%; left: 6%; right: 6%; }
+.repetition-stack {
+  text-align: left;
+  font-family: "Cover Condensed", Impact, sans-serif;
+  font-size: 12.5cqw; letter-spacing: -.15cqw; line-height: .88;
+}
+.repetition-stack span { display: block; }
+.repetition-fade { color: #183a87; mask-image: linear-gradient(to bottom, transparent, rgb(0 0 0 / 60%)); }
+.repetition-solid { color: #192a48; -webkit-text-stroke: 1.4px #f0eedf; paint-order: stroke fill; }
+.repetition-over, .repetition-resolution {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 400; line-height: .9; letter-spacing: -.6cqw;
+  -webkit-text-stroke: 1.4px #f0eedf; paint-order: stroke fill;
+}
+.repetition-over { margin-top: -.8cqw; text-align: left; font-size: 9.5cqw; line-height: .72; }
+.repetition-resolution { margin-top: -.4cqw; text-align: left; font-size: 13cqw; line-height: .82; }
+.repetition-ending { width: 100%; }
+.repetition-subtitle {
+  margin-top: 2.5cqw;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 3.9cqw;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: .08em;
+  text-align: right;
+}
+
+/* The supplied pink/blue figure retains the cover's flowing, warped title. */
+.transpositions-type-block { left: 6%; right: 6%; bottom: 6%; }
+.transpositions-title { display: block; width: 100%; height: auto; overflow: visible; }
+.transpositions-subtitle {
+  margin-top: -1cqw;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 5.2cqw; line-height: 1.2; letter-spacing: .16em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+  .writing .section-body {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 820px;
+  }
+}
+@media (max-width: 700px) {
+  .writing .section-body {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+    gap: 36px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story:is(:hover, :focus-within, .is-selected) { transform: none; }
+}

@@ -1,14 +1,6 @@
-import { createElement, Mail, Navigation2 } from "lucide";
+import { createElement, Mail } from "lucide";
 import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 
-const plane = document.querySelector(".footer-plane");
-const footer = document.querySelector("footer");
-const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-const finePointer = matchMedia("(hover: hover) and (pointer: fine)");
-
-plane.append(
-  createElement(Navigation2, { width: 21, height: 21, "stroke-width": 1.5 }),
-);
 document.querySelector("#footer-email").append(
   createElement(Mail, {
     width: 19,
@@ -28,19 +20,3 @@ document.querySelector("#footer-linkedin").append(
     "aria-hidden": "true",
   }),
 );
-const reset = () => {
-  plane.style.transform = "";
-};
-const clamp = (value) => Math.max(-1, Math.min(1, value));
-
-footer.addEventListener("pointermove", (event) => {
-  if (reducedMotion.matches || !finePointer.matches) return;
-  const bounds = plane.getBoundingClientRect();
-  const x = clamp((event.clientX - bounds.left - bounds.width / 2) / 100);
-  const y = clamp((event.clientY - bounds.top - bounds.height / 2) / 80);
-  plane.style.transform = `translate(${x * 3}px, ${y * 2}px) rotate(${x * 7}deg)`;
-});
-footer.addEventListener("pointerleave", reset);
-window.addEventListener("blur", reset);
-reducedMotion.addEventListener("change", reset);
-finePointer.addEventListener("change", reset);
