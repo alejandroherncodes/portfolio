@@ -3,7 +3,7 @@ export const articles = [
   {
     "id": "charli",
     "title": "Charli Goes Gothic",
-    "summary": "Unmistakably Charli, this album presents untamable emotions boiling underneath heavy layers of processing.",
+    "summary": "Unmistakably Charli, <em>Wuthering Heights</em> presents untamable emotions boiling underneath heavy layers of processing.",
     "awardSticker": "assets/img/winner-sticker.png",
     "textFile": "articles/charli.html",
     "pages": [],

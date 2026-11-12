@@ -59,7 +59,7 @@
 .story-open { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; border-radius: 0; }
 .story-open:focus-visible { outline: 3px solid #06a5da; outline-offset: 4px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
-.story:is(:hover, :focus-within) { transform: translateY(-3px) rotate(-0.5deg); box-shadow: 1px 3px 3px #0003, 6px 10px 13px #0002; }
+.story:is(:hover, :focus-within) { transform: translateY(-3px) rotate(var(--book-hover-angle, -0.5deg)); box-shadow: 1px 3px 3px #0003, 6px 10px 13px #0002; }
 .story.is-selected { transform: translateY(-7px) rotate(-1deg); }
 .cover-read { bottom: 4.8%; right: 4%; font-size: 3cqw; }
 .award-slot img { display: block; width: 100%; height: 100%; object-fit: contain; }
@@ -78,6 +78,7 @@
 [data-cover="charli"] .cover-art { background: #3f3f3f; color: rgb(250 250 246 / 97%); }
 .charli-photo { opacity: .75; object-position: 52% center; filter: contrast(1.15) saturate(.8); }
 .charli-title { top: 3.5%; left: 6%; right: 6%; text-align: right; font-family: "Times New Roman", Times, serif; font-size: 19.7cqw; line-height: .85; letter-spacing: -.95cqw; }
+.charli-title, .adela-title .adela-name { color: #fbf9fd; }
 .charli-description, .adela-description { left: 6%; bottom: 9%; font-size: 5.1cqw; line-height: 1.05; }
 .charli-description em, .adela-description em { font-weight: 600; }
 [data-cover="charli"] .cover-imprint, [data-cover="adela"] .cover-imprint { right: 40%; font-size: 3.9cqw; }
@@ -107,12 +108,16 @@
 .award-slot--nominee b { font-size: 4.4cqw; font-weight: 400; margin: .8cqw 0 .3cqw; }
 .award-slot--nominee small { font-size: 2.4cqw; }
 
-/* Mozart: the supplied optical patterns blend into uncoated cream stock. */
-[data-cover="mozart"] .cover-art { background: #f0eedf; color: #0d0d0a; }
+/* Shared pale stock keeps cover backgrounds and type outlines consistent. */
+[data-cover="mozart"],
+[data-cover="ddjdsFinal"] { --cover-paper: #fbf9fd; }
+[data-cover="screenFinal"] { --cover-paper: #fafcff; }
+/* Mozart: the supplied optical patterns blend into the paper. */
+[data-cover="mozart"] .cover-art { background: var(--cover-paper); color: #0d0d0a; }
 .mozart-pattern { position: absolute; width: 115%; height: auto; mix-blend-mode: multiply; }
 .mozart-pattern--one { top: -7%; left: -8%; transform: rotate(-13deg); }
 .mozart-pattern--two { bottom: -31%; left: -25%; width: 92%; transform: rotate(18deg); opacity: .2; }
-[data-cover="mozart"] .cover-kicker, .research-kicker { --label-background: #f0eedf; --label-ink: #0d0d0a; }
+[data-cover="mozart"] .cover-kicker, .research-kicker { --label-background: var(--cover-paper); --label-ink: #0d0d0a; }
 [data-cover="feature"] .cover-kicker,
 [data-cover="mozart"] .cover-kicker,
 .research-kicker {
@@ -140,7 +145,7 @@
 }
 .mozart-category span { display: block; }
 .mozart-title, .mozart-category {
-  -webkit-text-stroke: 1.6px #f0eedf;
+  -webkit-text-stroke: 1.6px var(--cover-paper);
   paint-order: stroke fill;
 }
 
@@ -149,13 +154,11 @@
 .adela-photo { filter: grayscale(1) contrast(2.6); mix-blend-mode: multiply; object-position: 65% center; opacity: .9; }
 [data-cover="adela"] .cover-kicker { color: #fff7e8; font-size: 3.2cqw; text-shadow: 0 1px 2px #000b; }
 .adela-title { top: 12%; left: 6%; right: 2%; display: flex; flex-direction: column; align-items: start; font-family: "Cover Condensed", Impact, sans-serif; font-size: 23.3cqw; line-height: .88; letter-spacing: -.5cqw; color: rgb(255 251 232 / 96%); }
-.adela-title .adela-name { color: inherit; }
-.adela-name span { color: #f8f2e5; }
 .adela-title > span:last-child { font-size: 23cqw; }
 
-/* Research covers share Mozart's paper, ink, header, and subject-label conventions. */
+/* Research covers use tinted paper with shared ink and subject-label conventions. */
 [data-cover="screenFinal"] .cover-art,
-[data-cover="ddjdsFinal"] .cover-art { background: #f0eedf; color: #192a48; }
+[data-cover="ddjdsFinal"] .cover-art { background: var(--cover-paper); color: #192a48; }
 .research-art {
   position: absolute;
   inset: 0;
@@ -178,11 +181,11 @@
 }
 .repetition-stack span { display: block; }
 .repetition-fade { color: #183a87; mask-image: linear-gradient(to bottom, transparent, rgb(0 0 0 / 60%)); }
-.repetition-solid { color: #192a48; -webkit-text-stroke: 1.4px #f0eedf; paint-order: stroke fill; }
+.repetition-solid { color: #192a48; -webkit-text-stroke: 1.4px var(--cover-paper); paint-order: stroke fill; }
 .repetition-over, .repetition-resolution {
   font-family: "Times New Roman", Times, serif;
   font-weight: 400; line-height: .9; letter-spacing: -.6cqw;
-  -webkit-text-stroke: 1.4px #f0eedf; paint-order: stroke fill;
+  -webkit-text-stroke: 1.4px var(--cover-paper); paint-order: stroke fill;
 }
 .repetition-over { margin-top: -.8cqw; text-align: left; font-size: 9.5cqw; line-height: .72; }
 .repetition-resolution { margin-top: -.4cqw; text-align: left; font-size: 13cqw; line-height: .82; }

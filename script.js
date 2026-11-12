@@ -1,5 +1,5 @@
-import { articles } from "./articles.js?v=20261111-3";
-import { coverMarkup } from "./book-covers.js?v=20261111-2";
+import { articles } from "./articles.js?v=20261111-4";
+import { coverMarkup } from "./book-covers.js?v=20261111-6";
 
 const reader = document.querySelector("#print-reader");
 const embedView = document.querySelector("#reader-embed");
@@ -13,7 +13,7 @@ renderCards();
 
 // Decorative modules must not prevent the writing samples from appearing.
 for (const path of [
-  "./assets/vendor/book-texture.js?v=20261111-3",
+  "./assets/vendor/book-texture.js?v=20261111-4",
   "./assets/vendor/footer-icons.js?v=20261111-2",
 ]) {
   import(path).catch((error) => console.warn("Optional decoration could not load:", error));
@@ -64,6 +64,15 @@ function renderCards() {
     blurb.id = `blurb-${article.id}`;
     blurb.setAttribute("role", "tooltip");
     blurb.innerHTML = article.summary;
+    const varySlipAngle = () => {
+      const direction = Math.random() < 0.5 ? -1 : 1;
+      const angle = direction * 2 + (Math.random() - 0.5) * 1.4;
+      blurb.style.setProperty("--slip-angle", `${angle.toFixed(2)}deg`);
+      card.style.setProperty("--book-hover-angle", `${(-0.5 + (Math.random() - 0.5) * 0.6).toFixed(2)}deg`);
+    };
+    varySlipAngle();
+    card.addEventListener("pointerenter", varySlipAngle);
+    button.addEventListener("focus", varySlipAngle);
     button.setAttribute("aria-describedby", blurb.id);
     card.append(blurb);
     if (article.awardSticker) {

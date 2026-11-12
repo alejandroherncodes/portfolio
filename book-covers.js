@@ -31,7 +31,7 @@ const covers = {
     <div class="mozart-category"><span>psychology,</span><span>neuroscience,</span><span>&amp; culture</span></div>`,
   adela: `
     <img class="cover-photo adela-photo" src="assets/img/adela_img.jpeg" alt="">
-    <div class="adela-title"><span class="adela-name">ADÉL<span>A</span></span><span>ISN’T HERE</span><span>TO</span><span>APOLOGIZE</span></div>
+    <div class="adela-title"><span class="adela-name">ADÉLA</span><span>ISN’T HERE</span><span>TO</span><span>APOLOGIZE</span></div>
     <div class="adela-description"><em>The Provocateur</em><br>by ADÉLA</div>
     <div class="cover-imprint">Album Review · MUSC2340</div>`,
   screenFinal: `
@@ -52,7 +52,7 @@ const covers = {
     <div class="mozart-category research-category"><span>musicology,</span><span>gender identity,</span><span>&amp; culture</span></div>
     <div class="transpositions-type-block">
     <svg class="transpositions-title" viewBox="0 0 360 140" aria-hidden="true">
-      <g class="transpositions-lettering" fill="#192a48" stroke="#f0eedf" stroke-width="2" paint-order="stroke fill" font-family="Times New Roman, Times, serif" font-size="76">${transpositionsLetters}</g>
+      <g class="transpositions-lettering" fill="#192a48" stroke="var(--cover-paper, #f0eedf)" stroke-width="2" paint-order="stroke fill" font-family="Times New Roman, Times, serif" font-size="76">${transpositionsLetters}</g>
     </svg>
     <div class="transpositions-subtitle">The Way Sound Bends</div>
     </div>`,
