@@ -127,8 +127,8 @@ function openTextReader(article, button) {
   else issueLink.removeAttribute("href");
   printButton.hidden = article.id === "charli" || !article.pages.length;
   const source = document.querySelector("#text-reader-source");
-  const url = article.bibliography || article.issue || article.url;
-  source.hidden = issueInToolbar || !url;
+  const url = article.bibliography || article.url || (!issueInToolbar ? article.issue : null);
+  source.hidden = !url;
   if (url) source.href = url;
   else source.removeAttribute("href");
   source.textContent = article.linkLabel || "Read original article ➜";

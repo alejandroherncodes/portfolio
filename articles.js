@@ -7,7 +7,9 @@ export const articles = [
     "awardSticker": "assets/img/winner-sticker.png",
     "textFile": "articles/charli.html",
     "pages": [],
-    "issue": "https://www.tastemakersmag.com/issue/issue84"
+    "issue": "https://www.tastemakersmag.com/issue/issue84",
+    "url": "https://www.tastemakersmag.com/articles/wutheringheights-charlixcx",
+    "linkLabel": "Read on tastemakersmag.com"
   },
   {
     "id": "feature",
@@ -25,6 +27,8 @@ export const articles = [
       }
     ],
     "issue": "https://www.tastemakersmag.com/issue/issue84",
+    "url": "https://www.tastemakersmag.com/articles/now-raving-hollywood-infected",
+    "linkLabel": "Read on tastemakersmag.com",
     "credit": "Design by Nina Roshe"
   },
   {
