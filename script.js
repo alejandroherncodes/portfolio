@@ -120,7 +120,7 @@ function openTextReader(article, button) {
   activeCover = button;
   button.closest(".story").classList.add("is-selected");
   textReader.setAttribute("aria-label", article.title + " — article reader");
-  const issueInToolbar = article.id === "charli" || article.id === "feature";
+  const issueInToolbar = Boolean(article.issue);
   const issueLink = document.querySelector("#text-reader-issue");
   issueLink.hidden = !issueInToolbar;
   if (issueInToolbar) issueLink.href = article.issue;

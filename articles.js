@@ -37,6 +37,7 @@ export const articles = [
     "summary": "How pleasant music may help us tolerate uncertainty when the pressure is on.",
     "textFile": "articles/mozart.html",
     "pages": [],
+    "issue": "assets/writing/mozart-full-issue.pdf",
     "url": "https://www.nuscimagazine.com/mozarts-effect-on-dissonance",
     "linkLabel": "Read on nuscimagazine.com"
   },
