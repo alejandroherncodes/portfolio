@@ -48,7 +48,7 @@ const covers = {
     </div>`,
   ddjdsFinal: `
     <img class="research-art transpositions-photo" src="assets/img/transpositions-img.jpeg" alt="">
-    <div class="cover-kicker research-kicker">Interactive Research · MUSC2340</div>
+    <div class="cover-kicker research-kicker">Digital Gallery · MUSC2340</div>
     <div class="mozart-category research-category"><span>musicology,</span><span>gender identity,</span><span>&amp; culture</span></div>
     <div class="transpositions-type-block">
     <svg class="transpositions-title" viewBox="0 0 360 140" aria-hidden="true">
